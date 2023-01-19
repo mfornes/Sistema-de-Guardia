@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% load pwapp_extras %}
+{% block title %}Home{% endblock title %}
+{% block custom_css %}
+  <link href="{% static 'home.css' %}" rel="stylesheet" />
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+{% endblock custom_css %}
+
+{% block content %}
+
+<div class="d-flex" id="wrapper">
+
+    {% block side_bar %}
+      {% include "includes/sidebar.html" %}
+    {% endblock side_bar %}
+
+    <div id="page-content-wrapper">
+
+        {% block nav_bar %}
+          {% include "includes/navbar.html" %}
+        {% endblock nav_bar %}
+
+        <div class="container-fluid">
+
+          {% block page_content %}            
+            <div class="row row-cols-1 row-cols-md-2 g-4" style="margin-top: 50px;">
+              {% if request.user|has_group:"supervisor" %}
+                <div class="col">
+                  <div class="card shadow mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="../static/images/gurdia.jpg"  class="img-fluid rounded-start" alt="..." style="height: 130px;">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title">Plan de guardia Estudiantes</h5>
+                          <a  href="{% url 'guard_plan-list' %}" class="stretched-link"></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow mb-3" style="max-width: 540px;">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="../static/images/gurdia.jpg"  class="img-fluid rounded-start" alt="..." style="height: 130px;">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title">Plan de guardia Trabajadores</h5>
+                            <a  href="{% url 'guard_plan_employee-list' %}" class="stretched-link"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              {% endif %}                                      
+            </div>
+          {% endblock page_content %}
+        </div>
+</div>
+{% endblock content %}

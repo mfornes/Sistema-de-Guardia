@@ -1,0 +1,183 @@
+{% extends "home.html" %}
+{%load static %}
+{% load pwapp_extras %}
+{% block title %}Create{% endblock title %}
+{% block page_content %}
+<div class="card" style="margin-top: 50px;">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h3 class="mb-0">Crear Plan de Guardia</h3>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{% url 'guard_plan_employee-list' %}" class="btn btn-sm btn-primary">Listar</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">       
+        <form>
+            <!-- {% csrf_token %} -->
+            <div class="pl-lg-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div type="date" class="form-group">
+                            <label class="dateinput form-control-label" for="{{ form.date.id_for_label }}"> Dia:
+                            </label>
+                            {{ form.date }}
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="{{ form.local.id_for_label }}"> Local:
+                            </label>
+                            {{ form.local }}
+                        </div>
+                    </div>
+                </div>             
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card h-100">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <h3 class="mb-0">Primer Turno</h3>
+                                    </div>
+                                    {% if user|has_group:"supervisor" %}
+                                    <div class="col-2 text-right">
+                                        <a id="primerTurno" data-url="{% url 'get_guard_plan_employees-list' %}"
+                                            class="btn btn-sm btn-success" role="button">Adicionar</a>
+                                    </div>                               
+
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Trabajadores</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table-responsive">
+                                                        <table id="todos" class="table align-items-center table-flush table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">Nombre</th>
+                                                                    <th scope="col">Apellidos</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                        
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary" id="aceptarListado">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="listPrimerTurno" class="table align-items-center table-flush table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellidos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card h-100">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <h3 class="mb-0">Segundo Turno</h3>
+                                    </div>
+                                    {% if user|has_group:"supervisor" %}
+                                    <div class="col-2 text-right">
+                                        <a id="segundoTurno" data-url="{% url 'all-employees_segundo_turno' %}"
+                                            class="btn btn-sm btn-success" role="button">Adicionar</a>
+                                    </div>
+                                    <div class="modal fade" id="exampleModal1" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel1">Trabajadores</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table-responsive">
+                                                        <table id="todos1" class="table align-items-center table-flush table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">Nombre</th>
+                                                                    <th scope="col">Apellidos</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                        
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <a type="button" class="btn btn-primary" id="aceptarListado1">Aceptar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="listSegundoTurno" class="table align-items-center table-flush table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellidos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 offset-4">
+                        <a class="btn btn-success btn-block" id="createGP" data-url="{% url 'add_get_guard_plan_employee-create' %}">Crear</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock page_content %}
+{% block custom_js %}
+    <script type="text/javascript" src="{% static 'js/guard_plan_employee.js' %}"></script>  
+{% endblock custom_js %}    

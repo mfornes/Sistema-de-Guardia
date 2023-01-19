@@ -1,0 +1,77 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Update{% endblock title %}
+{% block page_content %}
+<div class="card" style="margin-top: 50px;">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h3 class="mb-0">Actualizar Trabajador #{{employee.id}}</h3>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{% url 'employee-detail' employee.id %}" class="btn btn-sm btn-info">Detalles</a>
+                <a href="{% url 'employee-list' %}" class="btn btn-sm btn-primary">Listar</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="pl-lg-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label"
+                                for="{{ form.name.id_for_label }}"> Nombre: </label>
+                                {{ form.name }}
+                                <p class="text-danger"> {{ form.name.errors.as_text }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label"
+                                for="{{ form.last_name.id_for_label }}"> Apellidos: </label>
+                                {{ form.last_name }}
+                                <p class="text-danger">{{ form.last_name.errors.as_text }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label"
+                                for="{{ form.area.id_for_label }}"> Área: </label>
+                                {{ form.area }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label"
+                                for="{{ form.recidence.id_for_label }}"> Residencia: </label>
+                                {{ form.recidence }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="form-control-label"
+                                for="{{ form.sexo.id_for_label }}"> Sexo: </label>
+                                {{ form.sexo }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 offset-4">
+                        <button type="submit" class="btn btn-success btn-block">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock page_content %}

@@ -1,0 +1,31 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Delete{% endblock title %}
+{% block page_content %}
+<div class="card" style="margin-top: 50px;">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h3 class="mb-0">Eliminar Trabajador #{{object.id}}</h3>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{% url 'employee-detail' object.id %}" class="btn btn-sm btn-info">Detalles</a>
+                <a href="{% url 'employee-list' %}" class="btn btn-sm btn-primary">Listar</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="alert alert-warning" role="alert">
+             ¿Estas seguro que quieres eliminar a <strong>{{ object }}</strong> ?
+            </div>
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <button type="submit" class="btn btn-block btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock page_content %}

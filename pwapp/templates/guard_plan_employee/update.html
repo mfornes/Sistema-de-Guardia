@@ -1,0 +1,219 @@
+{% extends "home.html" %}
+{% load static %}
+{% load pwapp_extras %}
+{% block title %}Update{% endblock title %}
+{% block page_content %}
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="mytoast" class="toast align-items-center text-bg-success p-3" role="alert" aria-live="assertive"
+        aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Actualizado Plan de Guardia #{{guard_plan.id}}
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<div class="card" style="margin-top: 50px;">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h3 class="mb-0">Actualizar Plan de Guardia #{{guard_plan.id}}</h3>
+            </div>
+            <div class="col-4 text-right">
+                <a href="{% url 'guard_plan_employee-detail' guard_plan.id %}" class="btn btn-sm btn-info">Detalles</a>
+                <a href="{% url 'guard_plan_employee-list' %}" class="btn btn-sm btn-primary">Listar</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form>
+            <!-- {% csrf_token %} -->
+            <div class="pl-lg-4">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div type="date" class="form-group">
+                            <label class="dateinput form-control-label" for="{{ form.date.id_for_label }}"> Dia:
+                            </label>
+                            {{ guard_plan.date }}
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label id="updateLocal" class="form-control-label" for="{{ guard_plan.local }}"> Local:
+                            </label>
+                            {{ guard_plan.get_local_display }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card h-100">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <h3 class="mb-0">Primer Turno</h3>
+                                    </div>
+                                    {% if user|has_group:"supervisor" %}
+                                    <div class="col-2 text-right">
+                                        <a id="updatePrimerTurno" data-url="{% url 'get_guard_plan_employees-list' %}"
+                                            class="btn btn-sm btn-success" role="button">Adicionar</a>
+                                    </div>
+
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Trabajadores</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table-responsive">
+                                                        <table id="updateList"
+                                                            class="table align-items-center table-flush table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">Nombre</th>
+                                                                    <th scope="col">Apellidos</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id="updateAceptarListado">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="updateListPrimerTurno"
+                                    class="table align-items-center table-flush table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellidos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for employees in guard_plan.employees_first_turn.all %}
+                                        <tr id="{{ employees.id }}">
+                                            <td>{{employees.name}}</td>
+                                            <td>{{employees.last_name}}</td>
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-outline-danger btnDelete">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card h-100">
+                            <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <h3 class="mb-0">Segundo Turno</h3>
+                                    </div>
+                                    {% if user|has_group:"supervisor" %}
+                                    <div class="col-2 text-right">
+                                        <a id="updateSegundoTurno" data-url="{% url 'all-employees_segundo_turno' %}"
+                                            class="btn btn-sm btn-success" role="button">Adicionar</a>
+                                    </div>
+                                    <div class="modal fade" id="exampleModal1" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel1">Trabajadores
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table-responsive">
+                                                        <table id="updateList1"
+                                                            class="table align-items-center table-flush">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">Detalles</th>
+                                                                    <th scope="col">Día</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancelar</button>
+                                                    <a type="button" class="btn btn-primary"
+                                                        id="updateAceptarListado1">Aceptar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="updateListSegundoTurno" class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellidos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for employees in guard_plan.employees_second_turn.all %}
+                                        <tr id="{{ employees.id }}">
+                                            <td>{{employees.name}}</td>
+                                            <td>{{employees.last_name}}</td>
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-outline-danger btnDelete">Eliminar</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 offset-4">
+                        <a class="btn btn-success btn-block" id="updateGP"
+                            data-url="{% url 'update_guard_plan_employee-update' guard_plan.id %}">Actualizar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock page_content %}
+{% block custom_js %}
+<script type="text/javascript" src="{% static 'js/guard_plan_employee.js' %}"></script>
+{% endblock custom_js %}

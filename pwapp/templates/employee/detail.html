@@ -1,0 +1,36 @@
+{% extends "home.html" %}
+{% load static %}
+{% load pwapp_extras %}
+{% block title %}Detail{% endblock title %}
+{% block page_content %}
+<div class="card" style="margin-top: 50px;">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-8">
+          <h3 class="mb-0">Detalles del Trabajador #{{employee.id}}</h3>
+        </div>
+        <div class="col-4 text-right">          
+          {% if user|has_group:"supervisor" %}
+            <a href="{% url 'employee-update' employee.id %}" class="btn btn-sm btn-info">Actualizar</a>
+            <a href="{% url 'employee-delete' employee.id %}" class="btn btn-sm btn-warning">Eliminar</a>
+          {% endif %}
+          <a href="{% url 'employee-list' %}" class="btn btn-sm btn-primary">Listar</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">Nombre</dt>
+      <dd class="col-sm-9">{{ employee.name }}</dd>
+      <dt class="col-sm-3">Apellidos</dt>
+      <dd class="col-sm-9">{{ employee.last_name }}</dd>
+      <dt class="col-sm-3">Área</dt>
+      <dd class="col-sm-9">{{ employee.area }}</dd>
+      <dt class="col-sm-3">Residencia</dt>
+      <dd class="col-sm-9">{{ employee.recidence }}</dd>
+      <dt class="col-sm-3">Sexo</dt>
+      <dd class="col-sm-9">{{ employee.sexo }}</dd>   
+    </dl>
+    </div>
+</div>
+{% endblock page_content %}

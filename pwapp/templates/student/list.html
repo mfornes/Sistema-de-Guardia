@@ -1,0 +1,50 @@
+{% extends "home.html" %}
+{% load static %}
+{% load pwapp_extras %}
+{% block title %}List{% endblock title %}
+{% block page_content %}
+<div class="row" style="margin-top: 50px;">
+    <div class="col-xl-12">
+        <div class="card shadow h-100">
+            <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h3 class="mb-0">Lista de Estudiantes</h3>
+                    </div>
+                    {% if user|has_group:"supervisor" %}
+                        <div class="col-2 text-right">
+                            <a href="{% url 'student-create' %}" class="btn btn-sm btn-success">Adicionar</a>
+                        </div>
+                    {% endif %}                    
+                    {% include "includes/search.html" %} 
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr class='clickable-row' data-href="{% url 'student-detail' student.id %}">                       
+                        <td>{{student.name}}</td>
+                        <td>{{student.last_name}}</td>
+                        <td>{{student.group}}</td>                       
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer py-4">
+            {% if is_paginated %}
+                {% include "includes/pagination.html" %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock page_content %}

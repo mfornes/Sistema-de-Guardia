@@ -1,0 +1,18 @@
+{% load pwapp_extras %}
+<div class="border-end bg-white" id="sidebar-wrapper">                
+    <div class="sidebar-heading border-bottom text-white bg-primary">Sistema de Guardia</div>
+    <div class="list-group list-group-flush"> 
+        <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'homepage' %}" >Inicio</a>    
+        {% if user|has_group:"supervisor" %}
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'employee-list' %}">Trabajadores</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'student-list' %}" >Estudiantes</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'guard_plan-list' %}">Plan de guardia Estudiantes</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'guard_plan_employee-list' %}">Plan de guardia Trabajadores</a>
+            <!-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Reporte de asistencia</a> -->
+        {% elif user|has_group:"student" %}
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'student-list' %}" >Estudiantes</a>
+        {% else %}
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'employee-list' %}">Trabajadores</a>
+        {% endif %}
+    </div>
+</div>
